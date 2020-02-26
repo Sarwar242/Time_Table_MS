@@ -16,8 +16,21 @@ Route::get('/', 'ProjectController@index')->name('index');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/login', 'Auth\LoginController@login')->name('login');
-Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+
+//Admin Auth
+Route::post('/login', 'AdminController@login')->name('login');
+Route::post('/logout', 'AdminController@logout')->name('logout');
+
+
+//Teacher Auth
+Route::post('/login', 'TeacherController@login')->name('teacher.login');
+Route::post('/logout', 'TeacherController@logout')->name('teacher.logout');
+
+
+
+
+
+
 Route::post('/test', 'ProjectController@test')->name('test');
 
 
