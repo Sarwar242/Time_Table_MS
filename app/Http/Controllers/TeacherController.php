@@ -4,19 +4,60 @@ namespace App\Http\Controllers;
 
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use DB;
+use Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 
 class TeacherController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    //Auth
+    use AuthenticatesUsers;
+
+    protected $redirectTo = '/teacher';
+
+    public function login(Request $request)
     {
-        //
+        $this->validate($request, [
+            'faculty_number' => 'required|string',
+        ]);
+        $teacher= Teacher::where('faculty_number', '=', $request->faculty_number)->first();
+        if ($teacher!=NULL){
+            $teacherName = $teacher->name;
+            $teacherId = $teacher->id;
+            session(['teacherName' => $teacherName, 'teacherId' => $teacherId]);
+            return redirect()->route('teacher');
+        } else {
+            session()->flash('failed', 'invalid Email or Password!');
+            return redirect()->route('index');
+        }
+    }
+    public function logout(Request $request)
+    {
+        session()->forget(['teacherName', 'teacherId']);
+        $request->session()->invalidate();
+        session()->flash('success', 'You Just Logged Out!');
+        return redirect()->route('index');
     }
 
+
+
+
+    //Fuctionalities
+
+    public function index()
+    {
+        return view('teacher.index');
+    }
+
+
+
+
+
+
+
+    //Admins Part
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -42,6 +83,8 @@ class TeacherController extends Controller
     {
         $teacher =Teacher::find($id);
         $teacher->delete();
+
+        session()->flash('success', 'A Teacher Deleted!');
         return redirect()->route('admin');
     }
 }

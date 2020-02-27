@@ -23,8 +23,8 @@ Route::post('/logout', 'AdminController@logout')->name('logout');
 
 
 //Teacher Auth
-Route::post('/login', 'TeacherController@login')->name('teacher.login');
-Route::post('/logout', 'TeacherController@logout')->name('teacher.logout');
+Route::post('/teacherlogin', 'TeacherController@login')->name('teacher.login');
+Route::post('/teacherlogout', 'TeacherController@logout')->name('teacher.logout');
 
 
 
@@ -33,9 +33,9 @@ Route::post('/logout', 'TeacherController@logout')->name('teacher.logout');
 
 Route::post('/test', 'ProjectController@test')->name('test');
 
+//Admin Routes
 
-
-Route::group(['prefix' => '/admin'], function () {
+Route::group(['prefix' => '/admin','middleware'=> 'auth'], function () {
     Route::get('/', 'AdminController@index')->name('admin');
     Route::post('/addTeacher', 'TeacherController@store')->name('admin.addTeacher');
     Route::get('/deleteTeacher/{id}', 'TeacherController@destroy')->name('admin.deleteTeacher');
@@ -51,3 +51,7 @@ Route::group(['prefix' => '/admin'], function () {
 
 
 //Teacher Routes
+
+Route::group(['prefix' => '/teacher'], function () {
+    Route::get('/', 'TeacherController@index')->name('teacher'); 
+});

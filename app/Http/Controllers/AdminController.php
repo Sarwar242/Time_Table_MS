@@ -14,22 +14,6 @@ class AdminController extends Controller
 {
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/admin';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
 
     public function login(Request $request)
     {
@@ -40,10 +24,6 @@ class AdminController extends Controller
 
         if (Auth::attempt(['name' => $request->name, 'password' => $request->password])) {
             $admin = Admin::where('name', '=', $request->name)->first();
-            $adminName = $admin->name;
-            $adminId = $admin->id;
-            session(['adminName' => $adminName, 'adminId' => $adminId]);
-
             return redirect()->intended(route('admin'));
 
         } else {
@@ -53,8 +33,7 @@ class AdminController extends Controller
     }
     public function logout(Request $request)
     {
-        $this->guard('admin')->logout();
-        session()->forget(['adminName', 'adminId']);
+        $this->guard('web')->logout();
         $request->session()->invalidate();
         return redirect()->route('index');
     }

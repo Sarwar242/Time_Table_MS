@@ -60,6 +60,21 @@
         </div>
     </div>
 </div>
+
+
+@if(Session::has('success'))
+<br>
+<br>
+<br><br>
+        <div class="alert alert-success alert-block mt-5">
+            <button type="button" class="close" data-dismiss="alert">
+                x
+            </button>
+            <strong>
+                {!! session('success') !!}
+            </strong>
+        </div>
+        @endif
 <!--NAVBAR SECTION END-->
 <br>
 

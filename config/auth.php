@@ -46,6 +46,12 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        //For Teachers
+        'teacher' => [
+            'driver' => 'session',
+            'provider' => 'teachers',
+        ],
     ],
 
     /*
@@ -71,10 +77,10 @@ return [
             'model' => App\Models\Admin::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'teachers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Teacher::class,
+        ],
     ],
 
     /*
@@ -98,6 +104,10 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
+        ],
+        'teachers' => [
+            'provider' => 'teachers',
+            'expire' => 60,
         ],
     ],
 

@@ -27,6 +27,7 @@
     </div>
 </div>
 
+
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators" style="margin-bottom: 160px">
@@ -65,7 +66,31 @@
         window.alert("Downloaded!");
     }
 </script>
-<div align="center" STYLE="margin-top: 30px">
+
+
+@if(Session::has('success'))
+
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">
+                x
+            </button>
+            <strong>
+                {!! session('success') !!}
+            </strong>
+     </div>
+@elseif(Session::has('failed'))
+
+        <div class="alert alert-warning alert-block mt-5">
+            <button type="button" class="close" data-dismiss="alert">
+                x
+            </button>
+            <strong>
+                {!! session('failed') !!}
+            </strong>
+     </div>
+@endif
+<br>
+<div align="center" STYLE="margin-top: 20px">
     <button data-scroll-reveal="enter from the bottom after 0.2s"
             id="teacherLoginBtn" class="btn btn-info btn-lg">TEACHER LOGIN
     </button>
@@ -124,6 +149,7 @@
                 <div class="form-group">
                     <label for="facultyno">Faculty No.</label>
                     <input type="text" class="form-control" id="facultyno" name="faculty_number" placeholder="Faculty No. ...">
+    
                 </div>
                 <div align="right">
                     <button type="submit" class="btn btn-default" name="LOGIN">LOGIN</button>
