@@ -109,7 +109,11 @@
         <tr>
         <td id="id" style="display:none">{{$classroom->id}}</td>
         <td>{{$classroom->name}}</td>
-        <td>{{$classroom->status}}</td>
+        @if($classroom->status==1)
+        <td>Alloted</td>
+        @else
+        <td>Not Alloted</td>
+        @endif
         <td><a href="{{route('admin.deleteClassroom',$classroom->id)}}" data-confirm="Are you sure to delete this item?"
                                             class="delete btn btn-danger btn-mini">Delete</a></td>
         </tr>

@@ -31,24 +31,35 @@
         </div>
         <div class="navbar-collapse collapse move-me">
             <ul class="nav navbar-nav navbar-left">
-                <li><a href="{{route('admin.addTeacher')}}">ADD TEACHERS</a></li>
-                <li><a href="{{route('admin.subjects')}}">ADD SUBJECTS</a></li>
-                <li><a href="{{route('admin.classrooms')}}">ADD CLASSROOMS</a></li>
+                <li><a href="{{route('admin')}}">TEACHERS</a></li>
+                <li><a href="{{route('admin.subjects')}}">SUBJECTS</a></li>
+                <li><a href="{{route('admin.classrooms')}}">CLASSROOMS</a></li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">ALLOTMENT
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href=allotsubjects.php>THEORY COURSES</a>
+                            <a href="{{route('admin.subject_allotment_theory')}}">THEORY COURSES</a>
                         </li>
                         <li>
-                            <a href=allotpracticals.php>PRACTICAL COURSES</a>
+                            <a href="{{route('admin.subject_allotment_lab')}}">PRACTICAL COURSES</a>
                         </li>
                         <li>
-                            <a href=allotclasses.php>CLASSROOMS</a>
+                            <a href="{{route('admin.classroom_allotment')}}">CLASSROOMS</a>
                         </li>
                     </ul>
                 </li>
                 <li><a href="generatetimetable.php">GENERATE TIMETABLE</a></li>
+
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">ROUTINES
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                    @foreach(App\Models\Semester::all() as $semester)
+                        <li>
+                            <a href="{{route('admin.semester.routine',$semester->id)}}">{{$semester->name}}</a>
+                        </li>
+                    @endforeach
+                    </ul>
+                </li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -81,9 +92,9 @@
 
 @yield('contents')
 
-<!--<div id="footer">
-    <!--  &copy 2014 yourdomain.com | All Rights Reserved |  <a href="http://binarytheme.com" style="color: #fff" target="_blank">Design by : binarytheme.com</a>
--->
+<div id="footer" style="margin-top: 30px;">
+      &copy 2020 yourdomain.com | All Rights Reserved | 
+</div>
 <!-- FOOTER SECTION END-->
 
 <!--  Jquery Core Script -->

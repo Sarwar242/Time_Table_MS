@@ -22,12 +22,14 @@ class TeacherController extends Controller
         $this->validate($request, [
             'faculty_number' => 'required|string',
         ]);
-        $teacher= Teacher::where('faculty_number', '=', $request->faculty_number)->first();
-        if ($teacher!=NULL){
+
+        if (Auth::guard('teacher')->attempt(['faculty_number' => $request->faculty_number, 'password' => $request->password])) {
+            $teacher= Teacher::where('faculty_number', '=', $request->faculty_number)->first();
             $teacherName = $teacher->name;
             $teacherId = $teacher->id;
             session(['teacherName' => $teacherName, 'teacherId' => $teacherId]);
             return redirect()->route('teacher');
+
         } else {
             session()->flash('failed', 'invalid Email or Password!');
             return redirect()->route('index');
@@ -35,6 +37,7 @@ class TeacherController extends Controller
     }
     public function logout(Request $request)
     {
+        $this->guard('teacher')->logout();
         session()->forget(['teacherName', 'teacherId']);
         $request->session()->invalidate();
         session()->flash('success', 'You Just Logged Out!');

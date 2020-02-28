@@ -130,31 +130,6 @@
         }
     </style>
 
-    <script>
-        function deleteHandlers() {
-            var table = document.getElementById("teacherstable");
-            var rows = table.getElementsByTagName("tr");
-            for (i = 0; i < rows.length; i++) {
-                var currentRow = table.rows[i];
-                //var b = currentRow.getElementsByTagName("td")[0];
-                var createDeleteHandler =
-                    function (row) {
-                        return function () {
-                            var cell = row.getElementsByTagName("td")[0];
-                            var id = cell.innerHTML;
-                            var x;
-                            if (confirm("Are You Sure?") == true) {
-                                window.location.href = "deleteteacher.php?name=" + id;
-
-                            }
-
-                        };
-                    };
-                currentRow.cells[6].onclick = createDeleteHandler(currentRow);
-            }
-        }
-    </script>
-
     <table id=teacherstable style="margin-left: 80px">
         <caption><strong>Teacher's Information </strong></caption>
         <tr>

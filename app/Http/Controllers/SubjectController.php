@@ -7,79 +7,41 @@ use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        return view('admin.subjects');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+     
+        $this->validate($request, [
+            "subject_name" => 'required',
+            "subject_code" => 'required',
+            "course_type" => 'required',
+            "semester_id" => 'required',
+            "department_id" => 'required',
+        ]);
+
+        $subject= new Subject;
+        $subject->subject_name = $request->subject_name;
+        $subject->subject_code = $request->subject_code;
+        $subject->course_type = $request->course_type;
+        $subject->semester_id = $request->semester_id;
+        $subject->department_id = $request->department_id;
+        $subject->save();
+       
+        session()->flash('success', 'New Subject Added!');
+        return redirect()->route('admin.subjects');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Subject $subject)
+    public function destroy($id)
     {
-        //
-    }
+        $subject =Subject::find($id);
+        $subject->delete();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Subject $subject)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Subject $subject)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Subject $subject)
-    {
-        //
+        session()->flash('success', 'A Subject Deleted!');
+        return redirect()->route('admin.subjects');
     }
 }

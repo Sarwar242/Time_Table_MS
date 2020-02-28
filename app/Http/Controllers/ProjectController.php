@@ -9,8 +9,13 @@ class ProjectController extends Controller
     public function index(){
         return view('index');
     }
-    
-    public function test(Request $request){
-    dd(Hash::make($request->password));
+
+    public function pass(){
+        return view('passhash');
     }
+    public function test(Request $request){
+    $pass=Hash::make($request->pass);
+    return view('passhash')->with('pass',$pass);
+    }
+
 }

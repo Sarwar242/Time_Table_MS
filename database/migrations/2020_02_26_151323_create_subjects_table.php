@@ -15,7 +15,21 @@ class CreateSubjectsTable extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('subject_code');
+            $table->string('subject_name');
+            $table->string('course_type')->comment('THEORY||LAB');
+            
+            $table->unsignedBigInteger('department_id');
+            $table->boolean('isAlloted')->default(0);
+            $table->unsignedBigInteger('semester_id');
             $table->timestamps();
+
+            $table->foreign('semester_id')
+                ->references('id')->on('semesters')
+                ->onDelete('cascade');
+            $table->foreign('department_id')
+                ->references('id')->on('departments')
+                ->onDelete('cascade');
         });
     }
 

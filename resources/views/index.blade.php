@@ -149,7 +149,9 @@
                 <div class="form-group">
                     <label for="facultyno">Faculty No.</label>
                     <input type="text" class="form-control" id="facultyno" name="faculty_number" placeholder="Faculty No. ...">
-    
+                   
+                   <!--Users don't need to know about this!-->
+                    <input type="text" style="display: none;" name="password" value="000">
                 </div>
                 <div align="right">
                     <button type="submit" class="btn btn-default" name="LOGIN">LOGIN</button>

@@ -10,4 +10,8 @@ class Teacher extends Authenticatable
         'name', 'faculty_number','alias','designation','phone','email','password',
     ];
 
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class);
+    }
 }

@@ -21,6 +21,8 @@ class CreateTeachersTable extends Migration
             $table->String('designation');
             $table->String('phone');
             $table->String('email');
+            $table->String('password')->default('$2y$10$QbMD9a1bl32n.0s7cYP1JurukXi1zFUdDWcfUZOSSfCqEwvaGa5Yy');
+            //pass:000
             $table->timestamps();
         });
     }
