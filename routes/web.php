@@ -71,14 +71,20 @@ Route::group(['prefix' => '/admin','middleware'=> 'auth'], function () {
     
     Route::get('/routine_semester/{id}', 'RoutineController@index')->name('admin.semester.routine');
 
+    //using ajax api to get data without reload!
     Route::get('/get-teachers/{id}', function ($id) {
-        $subject= App\Models\Subject::find($id);
-        
+        $subject= App\Models\Subject::find($id);     
         return json_encode($subject->teachers);
     });
 
     Route::post('/routine_semester', 'RoutineController@store')->name('admin.semester.routine.store');
-    //Route::get('/delete_classroom_allotment/{id}', 'RoutineController@delete_classroom_allotment')->name('admin.delete_classroom_allotment');
+    Route::get('/delete_routine/{id}', 'RoutineController@destroy')->name('admin.delete_routine');
+
+
+    //Generate Timetable
+    Route::get('/generate_timetable', 'TimetableController@index')->name('admin.generatetimetable');
+    Route::post('/generate_timetable', 'TimetableController@show')->name('admin.generatetimetable.get');
+
 });
 
 
@@ -86,4 +92,5 @@ Route::group(['prefix' => '/admin','middleware'=> 'auth'], function () {
 
 Route::group(['prefix' => '/teacher'], function () {
     Route::get('/', 'TeacherController@index')->name('teacher'); 
+    Route::post('/get_timetable', 'TeacherController@show')->name('teacher.get_timetable');
 });

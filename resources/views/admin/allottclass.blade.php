@@ -6,7 +6,7 @@
     <div align="center">
         <select name="semester_id" class="list-group-item">
             <option selected disabled>Select Semester</option>
-        @foreach(App\Models\Semester::all() as $sem)
+        @foreach(App\Models\Semester::all()->where('classroom_id', '=', null) as $sem)
             <option value="{{$sem->id}}">{{$sem->name}}</option>
         @endforeach
         </select>
@@ -54,17 +54,18 @@
             <th width="400">Alloted To</th>
             <th width="60">Action</th>
         </tr>
+        @if(!is_null($classrooms))
         <tbody>
-        @foreach(App\Models\Classroom::all()->where("status",1) as $classroom)
+        @foreach(App\Models\Semester::all()->where('classroom_id', '!=', null) as $semester)
         <tr>
-        <td>{{$classroom->name}}</td>
-            <td>{{$classroom->semester->name}}</td>
-            <td><a href="{{route('admin.delete_classroom_allotment',$classroom->id)}}" data-confirm="Are you sure to delete this?"
+        <td>{{$semester->classroom->name}}</td>
+            <td>{{$semester->name}}</td>
+            <td><a href="{{route('admin.delete_classroom_allotment',$semester->id)}}" data-confirm="Are you sure to delete this?"
                                             class="delete btn btn-danger btn-mini">Delete</a></td>
         </tr>
         @endforeach
-       
         </tbody>
+        @endif
     </table>
 </div>
 <script>

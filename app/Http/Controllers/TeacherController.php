@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use App\Models\Semester;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
@@ -51,10 +52,37 @@ class TeacherController extends Controller
 
     public function index()
     {
-        return view('teacher.index');
+        $method="teacher";
+        $teacher=Teacher::find(session('teacherId'));
+        return view('teacher.index')->with('teacher',$teacher)->with(compact('method'));
     }
 
 
+
+    public function show(Request $request)
+    {
+        $this->validate($request, [
+            'checker' => 'required',
+        ]);
+
+        if($request->checker == "semester")
+        {
+            $this->validate($request, [   
+                'semester_id' => 'required|Numeric',
+            ]);
+            $method="semester";
+            $semester=Semester::find($request->semester_id);
+            return view('teacher.index')->with('semester',$semester)->with(compact('method'));
+        }
+        elseif($request->checker == "teacher"){
+            $this->validate($request, [
+                'teacher_id' => 'required|Numeric',
+            ]);
+            $method="teacher";
+            $teacher=Teacher::find($request->teacher_id);
+            return view('teacher.index')->with('teacher',$teacher)->with(compact('method'));
+        }
+    }
 
 
 

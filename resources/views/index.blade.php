@@ -99,7 +99,7 @@
     </button>
 </div>
 <br>
-<div align="center">
+<!-- <div align="center">
     <form data-scroll-reveal="enter from the bottom after 0.2s" action="studentvalidation.php" method="post">
         <select id="select_semester" name="select_semester" class="list-group-item">
             <option selected disabled>Select Semester</option>
@@ -112,7 +112,7 @@
         </select>
         <button type="submit" class="btn btn-info btn-lg" style="margin-top: 10px">Download</button>
     </form>
-</div>
+</div> -->
 <!-- The Modal -->
 <div id="myModal" class="modal">
 

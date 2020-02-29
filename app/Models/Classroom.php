@@ -10,6 +10,6 @@ class Classroom extends Model
 
      public function semester()
     {
-        return $this->belongsTo(Semester::class);
+        return $this->hasOne(Semester::class);
     }
 }

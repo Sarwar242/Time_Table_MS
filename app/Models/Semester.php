@@ -10,4 +10,8 @@ class Semester extends Model
         'name',
     ];
 
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
+    }
 }

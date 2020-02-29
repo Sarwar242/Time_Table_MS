@@ -33,7 +33,7 @@
         <select name="period_id" class="list-group-item">
              <option selected disabled>Select Period</option>
              @foreach(App\Models\Period::all() as $period)
-                <option value="{{$period->id}}">{{$period->number}}-{{$period->duration}}</option>
+                <option value="{{$period->id}}">Peroid-{{$period->number}} --> {{$period->duration}}</option>
              @endforeach
         </select>
     </div>
@@ -127,19 +127,43 @@
     <table id=allotedclassroomstable>
         <caption><strong>Class Routines for {{$semester->name}}</strong></caption>
         <tr>
-                <td style="text-align:center">WEEKDAYS</td>
-                <td style="text-align:center">8:00-8:50</td>
-                <td style="text-align:center">8:55-9:45</td>
-                <td style="text-align:center">9:50-10:40</td>
-                <td style="text-align:center">10:45-11:35</td>
-                <td style="text-align:center">11:40-12:30</td>
-                <td style="text-align:center">12:30-1:30</td>
-                <td style="text-align:center">1:30-4:00</td>
-            </tr>
+            <td style="text-align:center">WEEKDAYS</td>
+        @foreach(App\Models\Period::orderBy('number','asc')->get() as $period)
+            <td style="text-align:center">{{$period->duration}}</td>
+        @endforeach
+        </tr>
         <tbody> 
+        @foreach(App\Models\Day::all()->where('type','open') as $day)
+            <tr>
+            <td style="text-align:center">{{$day->name}}</td>
+            @php $inc=0; @endphp
+            @foreach(App\Models\Period::all() as $period)
+            @php $inc+=1;
+            $check=0; @endphp
+            
+            @foreach($day->routines()->where('semester_id',$semester->id)->where('period_id',$period->id)->orderBy('period_id','asc')->get() as $routine)
+
+            <td style="text-align:center">{{$routine->subject->subject_name}} 
+            <span><br></span>{{$routine->teacher->name}}   <span><br></span>    
+            <a href="{{route('admin.delete_routine',$routine->id)}}" data-confirm="Are you sure to delete this routine?"
+                                            class="delete"><i style="font-size:20px;" class="fas fa-minus-circle"></i></a></td> 
+            </td>
+          
+            @php $check=1; @endphp
+            @endforeach 
+          
+          @if($check!=1) <td style="text-align:center; font-size:25px;">--</td>  @endif
+            @endforeach
+
+           
+            </tr>
+        @endforeach
         </tbody>
     </table>
 </div>
+
+
+<!-- Get Teacher Based on subject -->
 <script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
 <script>
 $("#subject_id").change(function() {

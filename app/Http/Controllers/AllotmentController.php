@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\Models\Subject;
 use App\Models\Classroom;
+use App\Models\Semester;
 use Illuminate\Http\Request;
 
 class AllotmentController extends Controller
@@ -59,17 +60,21 @@ class AllotmentController extends Controller
     
     public function allotClassroom(Request $request){
 
+        $semester=Semester::find($request->semester_id);
         $classroom=Classroom::find($request->classroom_id);
         $classroom->status=1;
-        $classroom->semester_id=$request->semester_id;
+        $semester->classroom_id=$request->classroom_id;
         $classroom->save();
+        $semester->save();
         return redirect()->route('admin.classroom_allotment'); 
     }  
     public function delete_classroom_allotment($id){   
-        $classroom=Classroom::find($id);
+        $semester=Semester::find($id);
+        $classroom=Classroom::find($semester->classroom_id);
         $classroom->status=0;
-        $classroom->semester_id=null;
+        $semester->classroom_id=null;
         $classroom->save();
+        $semester->save();
         return redirect()->route('admin.classroom_allotment'); 
     }
 

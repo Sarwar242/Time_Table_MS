@@ -16,6 +16,7 @@
     <link href="{{asset('css/style.css')}}" rel="stylesheet"/>
     <!-- Google	Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'/>
+    <script src="https://kit.fontawesome.com/1d6fee9e06.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -48,7 +49,7 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="generatetimetable.php">GENERATE TIMETABLE</a></li>
+                <li><a href="{{route('admin.generatetimetable')}}">GENERATE TIMETABLE</a></li>
 
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">ROUTINES
                         <span class="caret"></span></a>
@@ -72,6 +73,16 @@
     </div>
 </div>
 
+
+@if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 @if(Session::has('success'))
 <br>

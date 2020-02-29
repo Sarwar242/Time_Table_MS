@@ -16,7 +16,10 @@ class CreateSemestersTable extends Migration
         Schema::create('semesters', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->unsignedBigInteger('classroom_id')->nullable();
             $table->timestamps();
+            $table->foreign('classroom_id')
+            ->references('id')->on('classrooms');
         });
     }
 
